@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Echo Example</title>
+  </head>
+  <body>
+    <h2>Echo Example</h2>
+    <div id="ping-status"></div>
+
+    <script language="javascript" type="text/javascript">
+      var pingStatus;
+      var websocket;
+      function init() {
+        pingStatus = document.getElementById("ping-status");
+        websocket = new WebSocket("ws://" + location.host + "/echo");
+        websocket.onopen = function(evt) { onOpen(evt) };
+        websocket.onclose = function(evt) { onClose(evt) };
+        websocket.onmessage = function(evt) { onMessage(evt) };
+      }
+      function onOpen(evt) {
+        writeToScreen("CONNECTED");
+        doSend("ping");
+      }
+      function onClose(evt) {
+        writeToScreen("DISCONNECTED");
+      }
+      function onMessage(evt) {
+        writeToScreen("RECEIVED:" + evt.data);
+        writeToScreen("Wait 3 seconds before the next ping ...");
+        setTimeout(function(){
+          doSend("ping");
+        }, 3000);
+      }
+      function doSend(message) {
+        writeToScreen("SENT: " + message);
+        websocket.send(message);
+      }
+      function writeToScreen(message) {
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+        pre.innerHTML = message;
+        pingStatus.appendChild(pre);
+      }
+      window.addEventListener("load", init, false);
+    </script>
+  </body>
+</html>
