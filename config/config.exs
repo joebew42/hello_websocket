@@ -1,3 +1,3 @@
 use Mix.Config
 
-import_config "#{Mix.env()}.exs"
+config :hello_websocket, http_port: 4000
