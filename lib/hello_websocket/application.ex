@@ -2,7 +2,7 @@ defmodule HelloWebsocket.Application do
   use Application
 
   @http_options [
-    port: 4000,
+    port: Application.get_env(:hello_websocket, :http_port),
     dispatch: HelloWebsocket.Router.dispatch()
   ]
 
