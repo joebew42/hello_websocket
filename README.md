@@ -7,9 +7,11 @@ iex -S mix
 
 Open `http://localhost:4000/echo.html` in a browser :)
 
-## Run on a different port
+## Run with prod config
+
+it will bind to port 80
 
 ```
-export PORT=8080
+export MIX_ENV=prod
 mix clean; mix compile; mix run --no-halt
 ```
